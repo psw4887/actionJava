@@ -27,3 +27,15 @@ jobs:
 
     - name: Run SonarQube
       run: mvn sonar:sonar -Dsonar.projectKey=actionJava -Dsonar.host.url=${{secrets.SONAR_HOST}} -Dsonar.login=${{secrets.SONAR_TOKEN}}
+
+    - name: Deploy
+      uses: windowBoy/scp-action@master
+      with:
+        host: ${{ secrets.SSH_IP }}
+        username: ${{ secrets.SSH_ID }}
+        key: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.SSH_PORT }}
+        source: "target/*.jar"
+        target: "~/"
+        rm: false
+        script: "~/startup.sh"
