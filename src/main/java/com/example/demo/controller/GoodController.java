@@ -11,6 +11,6 @@ public class GoodController {
     @GetMapping
     String isGet() {
 
-        return "get!";
+        return "get";
     }
 }
