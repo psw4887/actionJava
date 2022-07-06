@@ -12,5 +12,5 @@ public class GoodController {
     String isGet() {
 
         return "get";
-    }
+    }//
 }
