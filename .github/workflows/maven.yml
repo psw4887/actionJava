@@ -28,7 +28,7 @@ jobs:
     - name: Run SonarQube
       run: mvn sonar:sonar -Dsonar.projectKey=actionJava -Dsonar.host.url=${{secrets.SONAR_HOST}} -Dsonar.login=${{secrets.SONAR_TOKEN}}
 
-    - name: Deploy
+    - name: upload file
       uses: appleboy/scp-action@master
       with:
         host: ${{ secrets.SSH_IP }}
@@ -38,4 +38,13 @@ jobs:
         source: "target/*.jar"
         target: "~/"
         rm: false
-        script: "~/startup.sh"
+
+    - name: execute shell script
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.SSH_IP }}
+        username: ${{ secrets.SSH_ID }}
+        key: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.SSH_PORT }}
+        script_stop: true
+        script: "./startup.sh"
